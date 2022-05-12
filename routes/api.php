@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Controllers\Api\UserController;
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,9 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// route for the api that return all the user in the database
-Route::apiResource('users', UserController::class);
+// public route here
+Route::controller(RegisterController::class)->group(function () {
+    Route::post('register', 'register');
+    Route::post('login', 'login');
+});
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// route securise here
+Route::middleware('auth:sanctum')->group(function () {
+    Route::resource('users', UserController::class);
 });

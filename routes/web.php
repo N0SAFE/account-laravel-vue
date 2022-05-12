@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,10 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-
-// set the dashboard view with a auth middleware
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-require __DIR__.'/auth.php';
+Route::get('/{path}', function () {
+    return view('app');
+})->where('path', '.*');
